@@ -9,13 +9,30 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useState } from 'react';
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export function LoginForm() {
+
+  const [FormData, setFormData ] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handelChange = (e) => {
+    const {name, value} = e.target
+    setFormData(prevState => ({
+        ...prevState , [name]: value
+    }))
+  }
+
+  const handelSubmit = (e) => { 
+    e.preventDefault()
+    console.log(FormData)
+    
+  }
+
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-6")} >
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
@@ -24,11 +41,13 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handelSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
+                  onChange={handelChange}
+                  name="email"
                   id="email"
                   type="email"
                   placeholder="m@example.com"
@@ -45,7 +64,12 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input 
+                  onChange={handelChange}
+                  name="password"
+                  id="password"
+                  type="password"
+                  required />
               </div>
               <Button type="submit" className="w-full">
                 Login
