@@ -12,9 +12,8 @@ const User = require("../models/UserModel.js")
 route.post("/register", async (req ,res) => {
   const data = req.body
   const {errors, isValid} = ValidateRegisterInput(data)
-  // res.send({data:data,validation:isValid})
   if (!isValid) {
-    return res.status(400).send({errors})
+    return res.send({errors})
   }
 
   const UserExist = await User.findOne({email: data.email})
@@ -46,34 +45,33 @@ route.post("/register", async (req ,res) => {
 
 route.post("/login", async (req, res) => {
   try {
-    const data = req.body
-    const {email, password} = data
-
-    // Vérification basique des champs
+    const data = req.body;
+    const { email, password } = data;
+    
     if (!email || !password) {
-      return res.status(400).json({
+      return res.json({
         error: "L'email et le mot de passe sont requis"
       });
     }
 
-    const {error, isValid} = ValidateLoginInput(data)
+    const { error, isValid } = ValidateLoginInput(data);
     
-    if(!isValid){
-      return res.status(400).json({
+    if (!isValid) {
+      return res.json({
         error: error
       });
     }
 
-    const FindUser = await User.findOne({email: email})
+    const FindUser = await User.findOne({ email: email });
     if (!FindUser) {
-      return res.status(400).json({
+      return res.json({
         error: "Utilisateur non trouvé"
       });
     }
 
     const isMatch = await bcrypt.compare(password, FindUser.password);
     if (!isMatch) {
-      return res.status(400).json({
+      return res.json({
         error: "Mot de passe incorrect"
       });
     }
@@ -81,7 +79,7 @@ route.post("/login", async (req, res) => {
     const payload = {
       id: FindUser.id,
       name: FindUser.name,
-    }
+    };
 
     jwt.sign(
       payload,
@@ -99,7 +97,7 @@ route.post("/login", async (req, res) => {
           message: "Connexion réussie"
         });
       }
-    )
+    );
   } catch (err) {
     console.error('Login error:', err);
     res.status(500).json({
@@ -107,5 +105,6 @@ route.post("/login", async (req, res) => {
     });
   }
 });
+
 
 module.exports = route

@@ -22,31 +22,30 @@ export function LoginForm() {
 
   const [isLoading ,setisLoading] = useState(false)
 
-  const handelChange = (e) => {
+  const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
     setFormData(prevState => ({
         ...prevState , [name]: value
     }))
   }
 
-  const handelSubmit = (e) => { 
-    e.preventDefault()
-    setisLoading(true)
-    console.log(FormData)
-    axios.post("http://localhost:5000/login",FormData)
-    .then( (res) => {
-      console.log(res);
-      setisLoading(false)
-      if (res.success) {
-        toast.success("Loged succesfuly")
-      }
-    })
-    .catch( (err) => {
-      console.log(err);
-      toast.error(err.error)
-    })
-
+  const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
+    e.preventDefault();
+    setisLoading(true);
+    axios.post("http://localhost:5000/login", FormData)
+      .then((res) => {
+        setisLoading(false);
+        if (res.data.success) {
+          toast.success("Logged in successfully");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setisLoading(false);
+        toast.error(err.message || "Une erreur s'est produite");
+      });
   }
+  
 
   return (
     <div className={cn("flex flex-col gap-6")} >

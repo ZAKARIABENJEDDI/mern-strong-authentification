@@ -8,12 +8,9 @@ import Navbar from './components/Navbar';
 const App = () => {
   return (
     <div className="p-5 space-y-2 bg-gray-100">
-      {/* <Login/> */}
-      {/* <RegisterForm/> */}
       <Router>
       <div>
         <Navbar />
-        {/* Définition des routes */}
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
