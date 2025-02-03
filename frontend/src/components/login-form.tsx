@@ -10,6 +10,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from 'react';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 export function LoginForm() {
 
@@ -17,6 +19,8 @@ export function LoginForm() {
     email: '',
     password: ''
   })
+
+  const [isLoading ,setisLoading] = useState(false)
 
   const handelChange = (e) => {
     const {name, value} = e.target
@@ -27,8 +31,21 @@ export function LoginForm() {
 
   const handelSubmit = (e) => { 
     e.preventDefault()
+    setisLoading(true)
     console.log(FormData)
-    
+    axios.post("http://localhost:5000/login",FormData)
+    .then( (res) => {
+      console.log(res);
+      setisLoading(false)
+      if (res.success) {
+        toast.success("Loged succesfuly")
+      }
+    })
+    .catch( (err) => {
+      console.log(err);
+      toast.error(err.error)
+    })
+
   }
 
   return (
@@ -71,7 +88,7 @@ export function LoginForm() {
                   type="password"
                   required />
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 Login
               </Button>
               <Button variant="outline" className="w-full">
@@ -87,6 +104,7 @@ export function LoginForm() {
           </form>
         </CardContent>
       </Card>
+      <ToastContainer />
     </div>
   )
 }
