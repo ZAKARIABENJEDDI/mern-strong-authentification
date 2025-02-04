@@ -33,17 +33,22 @@ export function LoginForm() {
     e.preventDefault();
     setisLoading(true);
     axios.post("http://localhost:5000/login", FormData)
-      .then((res) => {
-        setisLoading(false);
-        if (res.data.success) {
-          toast.success("Logged in successfully");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setisLoading(false);
-        toast.error(err.message || "Une erreur s'est produite");
-      });
+    .then((res) => {
+      setisLoading(false);
+      console.log(res.data);
+      if (res.data.success) {
+        toast.success("Logged in successfully");
+      }
+
+      if (res.data.error) {
+        toast.warning(res.data.error)
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      console.log(err.error);
+      toast.error(err.error || "Une erreur s'est produite");
+    });
   }
   
 

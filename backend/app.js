@@ -13,7 +13,7 @@ const app = express();
 
 // Configuration CORS pour permettre au frontend d'accéder à l'API
 const corsOptions = {
-  origin: "http://localhost:5174", // or 5173 sa depend vite
+  origin: "http://localhost:5173", // or 5173 sa depend vite
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true

@@ -55,7 +55,6 @@ route.post("/login", async (req, res) => {
     }
 
     const { error, isValid } = ValidateLoginInput(data);
-    
     if (!isValid) {
       return res.json({
         error: error
