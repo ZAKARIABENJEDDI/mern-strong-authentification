@@ -13,8 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import axios from "axios"
-export default function RegisterForm() {
+import { toast ,ToastContainer} from "react-toastify";
 
+export default function RegisterForm() {
   const [FormData, setFormData] = useState({
     "name":"",
     "email":"",
@@ -28,19 +29,23 @@ export default function RegisterForm() {
       ...prevState , [name]:value
     }))
   }
-  
+
   const handelSubmit = (e) => {
     e.preventDefault()
     console.log(FormData)
     axios.post("http://localhost:5000/register",FormData)
     .then((res) =>{
       console.log(res);
+      if (res.data.success) {
+        toast.success(res.data.success)
+      }
     })
     .catch((err) =>{
-      console.log(err);
+      if (err.chech) {
+        toast.error(res.chech)
+      }
     })
   }
-
 
   return (
     <div className={cn("flex flex-col gap-6")}>
@@ -93,6 +98,7 @@ export default function RegisterForm() {
           </form>
         </CardContent>
       </Card>
+      <ToastContainer />
     </div>
   );
 }
