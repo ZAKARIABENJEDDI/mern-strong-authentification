@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-
+import axios from "axios"
 export default function RegisterForm() {
 
   const [FormData, setFormData] = useState({
@@ -27,10 +27,20 @@ export default function RegisterForm() {
     setFormData(prevState => ({
       ...prevState , [name]:value
     }))
+  }
+  
+  const handelSubmit = (e) => {
+    e.preventDefault()
     console.log(FormData)
+    axios.post("http://localhost:5000/register",FormData)
+    .then((res) =>{
+      console.log(res);
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
   }
 
-  
 
   return (
     <div className={cn("flex flex-col gap-6")}>
@@ -40,7 +50,7 @@ export default function RegisterForm() {
           <CardDescription>Create your account</CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handelSubmit}>
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
               <Input
