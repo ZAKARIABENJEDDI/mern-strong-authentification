@@ -11,8 +11,27 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 export default function RegisterForm() {
+
+  const [FormData, setFormData] = useState({
+    "name":"",
+    "email":"",
+    "password":"",
+    "password2":""
+  })
+
+  const handelChange = (e: React.FormEvent<HTMLFormElement>) => {
+    const {name, value} = e.target
+    setFormData(prevState => ({
+      ...prevState , [name]:value
+    }))
+    console.log(FormData)
+  }
+
+  
+
   return (
     <div className={cn("flex flex-col gap-6")}>
       <Card>
@@ -24,19 +43,39 @@ export default function RegisterForm() {
           <form className="space-y-4">
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="John Doe" />
+              <Input
+                onChange={handelChange}
+                name="name"
+                id="name"
+                placeholder="John Doe" 
+                />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" placeholder="johndoe@example.com" />
+              <Input 
+                onChange={handelChange}
+                name="email"
+                id="email"
+                type="email"
+                placeholder="johndoe@example.com" />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="********" />
+              <Input 
+                onChange={handelChange}
+                name="password" 
+                id="password" 
+                type="password"
+                placeholder="********" />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input id="confirmPassword" type="password" placeholder="********" />
+              <Label htmlFor="password">Confirm Password</Label>
+              <Input 
+                onChange={handelChange}
+                name="password2" 
+                id="password" 
+                type="password"
+                placeholder="********" />
             </div>
             <Button type="submit" className="w-full">
               Register
