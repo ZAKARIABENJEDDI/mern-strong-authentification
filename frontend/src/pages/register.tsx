@@ -38,12 +38,12 @@ export default function RegisterForm() {
       console.log(res);
       if (res.data.success) {
         toast.success(res.data.success)
+      }else if(res.data.echec){
+        toast.warning(res.data.echec)
       }
     })
     .catch((err) =>{
-      if (err.chech) {
-        toast.error(res.chech)
-      }
+      toast.error(err)
     })
   }
 
