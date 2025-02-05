@@ -43,6 +43,9 @@ export default function Forget() {
       console.log("code 3amr");
       if(code === codeValue){
         toast.success("Code Correct")
+        setTimeout(() => {
+          navigate("/home")
+        }, 300);
       }else{
         toast.warning("Code Incorrect");
       }

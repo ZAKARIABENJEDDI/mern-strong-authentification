@@ -118,7 +118,6 @@ route.post("/forget", async (req,res) => {
   }
   const code = crypto.randomInt(100000, 999999).toString();
   res.json({code:code})
-  // console.log(code)
 
 })
 
