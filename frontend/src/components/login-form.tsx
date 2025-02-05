@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function LoginForm() {
 
@@ -22,7 +22,7 @@ export function LoginForm() {
   })
 
   const [isLoading ,setisLoading] = useState(false)
-
+  const navigate = useNavigate()
   const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
     setFormData(prevState => ({
@@ -39,6 +39,7 @@ export function LoginForm() {
       console.log(res.data);
       if (res.data.success) {
         toast.success("Logged in successfully");
+        navigate("/home")
       }
 
       if (res.data.error) {
@@ -81,7 +82,6 @@ export function LoginForm() {
                   <Label htmlFor="password">Password</Label>
                   <Link
                     to="/forget"
-                    // className="text-white hover:text-black hover:bg-white px-4 py-2 rounded"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
                         Forgot your password?
@@ -100,9 +100,11 @@ export function LoginForm() {
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4">
-                Sign up
-              </a>
+              <Link
+                className="underline underline-offset-4"
+                to="/register">
+                  Sign up
+              </Link>
             </div>
           </form>
         </CardContent>

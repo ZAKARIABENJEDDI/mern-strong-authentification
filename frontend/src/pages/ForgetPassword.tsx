@@ -40,7 +40,6 @@ export default function Forget() {
       })
     }else{
       setisLoading(false);
-      console.log("code 3amr");
       if(code === codeValue){
         toast.success("Code Correct")
         setTimeout(() => {
@@ -90,27 +89,29 @@ export default function Forget() {
                     required
                   />
               </div>
-              <div>
-                <div className="mb-2 block">
-                  <Label htmlFor="code">Enter Code</Label>
+                {code ? <>
+                <div>
+                  <div className="mb-2 block">
+                    <Label htmlFor="code">Enter Code</Label>
+                  </div>
+                  <Input
+                      onChange={(e) => {
+                        setcodeValue(e.target.value)
+                      }}
+                      name="code"
+                      id="code"
+                      type="text"
+                      readOnly={!code}
+                      disabled={!code}
+                    />
                 </div>
-                <Input
-                    onChange={(e) => {
-                      setcodeValue(e.target.value)
-                    }}
-                    name="code"
-                    id="code"
-                    type="text"
-                    readOnly={!code}
-                    disabled={!code}
-                  />
-              </div>
+                </> : ""}
               <div className="w-full">
                 <Button 
                   type="submit"
                   disabled={isLoading}
                 >
-                  {isLoading ? "..." : "Log in to your account"}
+                  {isLoading ? "..." : "Send Code"}
                 </Button>
               </div>
               <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
