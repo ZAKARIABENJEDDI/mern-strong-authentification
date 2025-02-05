@@ -17,15 +17,16 @@ export default function Forget() {
 
   const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
-    console.log(email);
-    toast.success("ww")
     setisLoading(true);
-    setTimeout(() => {
-      setisLoading(false);
-    }, 5000);
-    axios.post("",code)
+    axios.post("http://localhost:5000/forget",{email})
     .then((res)=>{
-      console.log(res);
+      setisLoading(false);
+      if (res.data.isValid) {
+        toast.success(res.data.isValid)
+      }
+      if (res.data.error) {
+        toast.warning(res.data.error.email)
+      }
     })
     .catch((err)=>{
       console.log(err);

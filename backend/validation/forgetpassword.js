@@ -2,13 +2,13 @@ const Validator = require("validator")
 const isEmpty = require("is-empty")
 
 
-module.exports = ForgetPasswordValidation = (data) => {
+module.exports = ForgetPasswordValidation = (email) => {
   const errors = {}
-  data.email = !isEmpty(data.email) ? data.email : ''
-
-  if (!Validator.isEmail(data.email)) {
+  email = !isEmpty(email) ? email : ""
+  if (!Validator.isEmail(email)) {
     errors.email = "Email Form Invalid"
-  }else if(isEmpty(data.emai)){
+  }
+  if(Validator.isEmpty(email)){
     errors.email = "Entrer L'email"
   }
 

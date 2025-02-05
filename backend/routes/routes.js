@@ -6,6 +6,7 @@ const keys = require("../config/keys.js")
 //validation register and login inputs
 const ValidateRegisterInput = require("../validation/register.js")
 const ValidateLoginInput = require("../validation/login.js")
+const ForgetPasswordValidation = require("../validation/forgetpassword.js")
 
 //User Modal
 const User = require("../models/UserModel.js")
@@ -105,5 +106,10 @@ route.post("/login", async (req, res) => {
   }
 });
 
+route.post("/forget", async (req,res) => {
+  const email = req.body.email
+  const {errors, isValid} = ForgetPasswordValidation(email)
+  res.json({email:email,isValid:isValid,error:errors})
+})
 
 module.exports = route
