@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 export function LoginForm() {
 
@@ -78,12 +79,13 @@ export function LoginForm() {
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
+                  <Link
+                    to="/forget"
+                    // className="text-white hover:text-black hover:bg-white px-4 py-2 rounded"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
-                  </a>
+                        Forgot your password?
+                  </Link>
                 </div>
                 <Input 
                   onChange={handelChange}

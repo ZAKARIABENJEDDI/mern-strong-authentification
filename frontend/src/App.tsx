@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from "./pages/login"
 import RegisterForm from "./pages/register"
 import Navbar from './components/Navbar';
+import Forget from './pages/ForgetPassword';
 
 
 
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/forget" element={<Forget />} />
         </Routes>
       </div>
     </Router>
