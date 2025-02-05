@@ -33,11 +33,10 @@ export default function Forget() {
   }
 
   const [openModal, setOpenModal] = useState(true);
-  
   const onCloseModal = () => {
     setOpenModal(false);
-    setemail(''); // Correction ici
-    navigate("/login"); // Rediriger vers la page login
+    setemail('');
+    navigate("/login");
   };
 
   return (

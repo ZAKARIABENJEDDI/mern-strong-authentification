@@ -23,7 +23,7 @@ export default function RegisterForm() {
     "password2":""
   })
 
-  const handelChange = (e: React.FormEvent<HTMLFormElement>) => {
+  const handelChange = (e) => {
     const {name, value} = e.target
     setFormData(prevState => ({
       ...prevState , [name]:value
