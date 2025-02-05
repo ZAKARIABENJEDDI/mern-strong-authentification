@@ -11,6 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function Forget() {
   const [email, setemail] = useState("")
   const [code, setCode] = useState("")
+  const [codeValue, setcodeValue] = useState("")
   const [isLoading ,setisLoading] = useState(false)
 
   const navigate = useNavigate();
@@ -18,19 +19,34 @@ export default function Forget() {
   const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
     setisLoading(true);
-    axios.post("http://localhost:5000/forget",{email})
-    .then((res)=>{
+    // console.log(code);
+    if (code.length === 0) {
+      axios.post("http://localhost:5000/forget",{email})
+      .then((res)=>{
+        setisLoading(false);
+        if (res.data.isValid) {
+          toast.success(res.data.isValid)
+        }
+        if (res.data.error) {
+          toast.warning(res.data.error)
+        }
+        if(res.data.code){
+          setCode(res.data.code)
+          toast.success(res.data.code)
+        }
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
+    }else{
       setisLoading(false);
-      if (res.data.isValid) {
-        toast.success(res.data.isValid)
+      console.log("code 3amr");
+      if(code === codeValue){
+        toast.success("Code Correct")
+      }else{
+        toast.warning("Code Incorrect");
       }
-      if (res.data.error) {
-        toast.warning(res.data.error.email)
-      }
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
+    }
   }
 
   const [openModal, setOpenModal] = useState(true);
@@ -77,7 +93,7 @@ export default function Forget() {
                 </div>
                 <Input
                     onChange={(e) => {
-                      setCode(e.target.value)
+                      setcodeValue(e.target.value)
                     }}
                     name="code"
                     id="code"

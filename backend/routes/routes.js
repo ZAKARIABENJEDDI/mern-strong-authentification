@@ -2,6 +2,8 @@ const express = require("express")
 const route = express.Router()
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const crypto = require("crypto");
+
 const keys = require("../config/keys.js")
 //validation register and login inputs
 const ValidateRegisterInput = require("../validation/register.js")
@@ -109,7 +111,15 @@ route.post("/login", async (req, res) => {
 route.post("/forget", async (req,res) => {
   const email = req.body.email
   const {errors, isValid} = ForgetPasswordValidation(email)
-  res.json({email:email,isValid:isValid,error:errors})
+  const EmailExist = await User.findOne({email:email})
+
+  if (!EmailExist) {
+    return res.json({error:"User Not Exist"})
+  }
+  const code = crypto.randomInt(100000, 999999).toString();
+  res.json({code:code})
+  // console.log(code)
+
 })
 
 module.exports = route
