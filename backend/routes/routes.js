@@ -125,23 +125,17 @@ route.post("/change_password", async (req, res) => {
   const data = req.body
   const {errors, isValid} = ChangePasswordValidation(data)
   const FindUser = await User.findOne({email:data.email})
-  if(FindUser && isValid === true){
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(data.password, salt, (err, hash) => {
-        if(err) throw err
-        const UpdateUser = await User.findOneAndUpdate({email:data.email},{password:hash})
-        .then((UpdateUser) =>{
-          if(UpdateUser){
-            return res.send({success:"User Updated Sucssucfuly"})
-          }
-        }).catch((err) => {
-          res.send({errors:err})
-        })
-      })
-    })
-  }else{
-    res.send({errors:"Not Exist"})
+  if(!FindUser || !isValid){
+    res.send({errors:"User Not Exist"})
   }
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const UpdateUser = await User.findOneAndUpdate(
+    { email },
+    { password: hashedPassword },
+    { new: true }
+  );
 
   // res.send({exist:FindUser,errors:errors})
 })
