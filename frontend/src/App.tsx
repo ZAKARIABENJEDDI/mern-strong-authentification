@@ -4,6 +4,7 @@ import RegisterForm from "./pages/register"
 import Navbar from './components/Navbar';
 import Forget from './pages/ForgetPassword';
 import Home from './pages/Home';
+import ChangePassword from './pages/ChangePassword';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/forget" element={<Forget />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/change_password" element={<ChangePassword />} />
         </Routes>
       </div>
     </Router>

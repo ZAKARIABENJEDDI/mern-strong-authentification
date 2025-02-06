@@ -43,7 +43,7 @@ export default function Forget() {
       if(code === codeValue){
         toast.success("Code Correct")
         setTimeout(() => {
-          navigate("/home")
+          navigate("/change_password")
         }, 300);
       }else{
         toast.warning("Code Incorrect");
@@ -104,8 +104,7 @@ export default function Forget() {
                       readOnly={!code}
                       disabled={!code}
                     />
-                </div>
-                </> : ""}
+                </div></> : ""}
               <div className="w-full">
                 <Button 
                   type="submit"
