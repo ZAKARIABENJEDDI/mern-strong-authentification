@@ -30,8 +30,10 @@ function ChangePassword() {
     e.preventDefault()
     axios.post("http://localhost:5000/change_password",data)
       .then((res) => {
-        console.log(res.data)
-        toast.success(res.data);
+        if(res.data.success){
+          toast.success(res.data.success)
+        }
+        console.log(res.data);
       })
       .catch((err) => {
         toast.error(err);
