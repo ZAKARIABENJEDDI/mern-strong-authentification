@@ -110,7 +110,7 @@ export default function Forget() {
                   type="submit"
                   disabled={isLoading}
                 >
-                  {isLoading ? "..." : "Send Code"}
+                  {code ? "Verifie" : isLoading ? "..." : "Send Code"}
                 </Button>
               </div>
               <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
