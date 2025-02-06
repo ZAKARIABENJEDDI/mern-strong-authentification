@@ -6,13 +6,18 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { Modal } from "flowbite-react";
 import { Link, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function ChangePassword() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email || "";
+
   const [passwords, setpasswords] = useState({
     "password":"",
-    "password2":""
+    "password2":"",
+    "email":email
   })
-  const navigate = useNavigate();
 
   const handelChange = (e: React.FormEvent<HTMLFormElement>) => {
     const {name, value} = e.target

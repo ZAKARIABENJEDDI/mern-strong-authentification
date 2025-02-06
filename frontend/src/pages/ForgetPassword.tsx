@@ -43,7 +43,8 @@ export default function Forget() {
       if(code === codeValue){
         toast.success("Code Correct")
         setTimeout(() => {
-          navigate("/change_password")
+          // navigate("/change_password")
+          navigate("/change_password", { state: { email } });
         }, 300);
       }else{
         toast.warning("Code Incorrect");

@@ -9,7 +9,7 @@ const keys = require("../config/keys.js")
 const ValidateRegisterInput = require("../validation/register.js")
 const ValidateLoginInput = require("../validation/login.js")
 const ForgetPasswordValidation = require("../validation/forgetpassword.js")
-
+const ChangePasswordValidation = require("../validation/changePassword.js")
 //User Modal
 const User = require("../models/UserModel.js")
 route.post("/register", async (req ,res) => {
@@ -122,7 +122,11 @@ route.post("/forget", async (req,res) => {
 })
 
 route.post("/change_password", async (req, res) => {
-  res.json({data:req.body})
+  const data = req.body
+  res.send({data:data})
+  // const {errors, isValid} = ChangePasswordValidation(data)
+  // res.send({errors:errors,valid:isValid})
+  // const FindUser = await User.findOneAndUpdate({})
 })
 
 module.exports = route
