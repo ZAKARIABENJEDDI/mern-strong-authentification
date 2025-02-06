@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input"
 import { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,12 +8,25 @@ import { Modal } from "flowbite-react";
 import { Link, useNavigate } from 'react-router-dom';
 
 function ChangePassword() {
+  const [passwords, setpasswords] = useState({
+    "password":"",
+    "password2":""
+  })
   const navigate = useNavigate();
 
-  const handelSubmit = (e) => {
-    e.preventDefault();
-    axios.post("http://localhost:5000")
+  const handelChange = (e: React.FormEvent<HTMLFormElement>) => {
+    const {name, value} = e.target
+    setpasswords(prevState => ({
+      ...prevState , [name]: value
+    }))
+    console.log(passwords);
+  }
+
+  const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    axios.post("http://localhost:5000/change_password",passwords)
       .then((res) => {
+        console.log(res.data)
         toast.success(res.data);
       })
       .catch((err) => {
@@ -40,7 +54,14 @@ function ChangePassword() {
                 <div className="max-w-sm">
                   <label htmlFor="hs-toggle-password-multi-toggle-np" className="block text-sm mb-2 dark:text-white">New password</label>
                   <div className="relative">
-                    <input id="hs-toggle-password-multi-toggle-np" type="password" className="py-3 ps-4 pe-10 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter new password" />
+                    <Input 
+                      onChange={handelChange}
+                      name="password"
+                      id="hs-toggle-password-multi-toggle-np" 
+                      type="password" 
+                      className="py-3 ps-4 pe-10 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter new password"
+                    />
+                      
                     <button type="button" data-hs-toggle-password='{"target": ["#hs-toggle-password-multi-toggle", "#hs-toggle-password-multi-toggle-np"]}' className="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600 dark:text-neutral-600 dark:focus:text-blue-500">
                       <svg className="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path className="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
@@ -54,7 +75,12 @@ function ChangePassword() {
                 <div className="max-w-sm mb-5">
                   <label htmlFor="hs-toggle-password-multi-toggle" className="block text-sm mb-2 dark:text-white">Current password</label>
                   <div className="relative">
-                    <input id="hs-toggle-password-multi-toggle" type="password" className="py-3 ps-4 pe-10 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter current password" defaultValue="12345qwerty" />
+                    <Input
+                      onChange={handelChange}
+                      name="password2"
+                      id="hs-toggle-password-multi-toggle" 
+                      type="password" 
+                      className="py-3 ps-4 pe-10 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter current password" defaultValue="12345qwerty" />
                   </div>
                 </div>
               </div>

@@ -121,4 +121,8 @@ route.post("/forget", async (req,res) => {
 
 })
 
+route.post("/change_password", async (req, res) => {
+  res.json({data:req.body})
+})
+
 module.exports = route
