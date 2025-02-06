@@ -13,7 +13,7 @@ function ChangePassword() {
   const location = useLocation();
   const email = location.state?.email || "";
 
-  const [passwords, setpasswords] = useState({
+  const [data, setdata] = useState({
     "password":"",
     "password2":"",
     "email":email
@@ -21,15 +21,14 @@ function ChangePassword() {
 
   const handelChange = (e: React.FormEvent<HTMLFormElement>) => {
     const {name, value} = e.target
-    setpasswords(prevState => ({
+    setdata(prevState => ({
       ...prevState , [name]: value
     }))
-    console.log(passwords);
   }
 
   const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    axios.post("http://localhost:5000/change_password",passwords)
+    axios.post("http://localhost:5000/change_password",data)
       .then((res) => {
         console.log(res.data)
         toast.success(res.data);

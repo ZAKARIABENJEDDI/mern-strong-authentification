@@ -123,10 +123,16 @@ route.post("/forget", async (req,res) => {
 
 route.post("/change_password", async (req, res) => {
   const data = req.body
-  res.send({data:data})
-  // const {errors, isValid} = ChangePasswordValidation(data)
-  // res.send({errors:errors,valid:isValid})
-  // const FindUser = await User.findOneAndUpdate({})
+  const {errors, isValid} = ChangePasswordValidation(data)
+  const FindUser = await User.findOne({email:res.data.email})
+  res.send({valid:isValid})
+  if(FindUser){
+    res.send({valid:isValid})
+  }else{
+    res.send({errors:"Not Exist"})
+  }
+
+  // res.send({exist:FindUser,errors:errors})
 })
 
 module.exports = route
